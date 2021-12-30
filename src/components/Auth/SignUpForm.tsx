@@ -1,23 +1,35 @@
 import React from "react";
 
-export default function SigUpForm(){
+interface SignUpProps {
+    name : string;
+    setName : React.Dispatch<React.SetStateAction <string>>;
+    email : string;
+    setEmail : React.Dispatch<React.SetStateAction <string>>;
+    password : string;
+    setPassword : React.Dispatch<React.SetStateAction <string>>;
+    connectedAcctId  : string;
+    setConnectedAccId : React.Dispatch<React.SetStateAction <string>>;
+    handleSubmitSignUp:(event: React.FormEvent) => void;
+}
+
+const SigUpForm: React.FC<SignUpProps> = ({name, setName, email, setEmail, password, setPassword,connectedAcctId, setConnectedAccId, handleSubmitSignUp}) => {
     return (
-        <form > 
+        <form onSubmit={handleSubmitSignUp}> 
           <label htmlFor="name"> Name: </label>
           <input 
             id='name'
             name='name'
             type='text'
-            value = 'name' // replace w/ --> {name}
-            // onChange={(event) => setName(event.target.value)} 
+            value = {name }
+            onChange={(event) => setName(event.target.value)} 
           />
           <label htmlFor='email'> Email: </label>
           <input 
             id='email'
             name='email'
             type='text'
-            value ='email' //  replace w/ -> {email}
-            // onChange={(event) => setCity(event.target.value)}
+            value ={email}
+            onChange={(event) => setEmail(event.target.value)}
           />
     
           <label htmlFor='password'> password: </label>
@@ -25,8 +37,8 @@ export default function SigUpForm(){
             id='password'
             name='password'
             type='text'
-            value ='password' // -> {password}
-            // onChange={(event) => setState(event.target.value)}
+            value ={password}
+            onChange={(event) => setPassword(event.target.value)}
           />
 
           <label htmlFor='Connected Account ID#'> Connected Acct ID#: </label>
@@ -34,13 +46,15 @@ export default function SigUpForm(){
             id='Connected Account ID#'
             name='Connected Account ID#'
             type='text'
-            value ='Connected Account ID#' // -> {ConnectedAccoundId}
-            // onChange={(event) => setState(event.target.value)}
+            value ={connectedAcctId}
+            onChange={(event) => setConnectedAccId(event.target.value)}
           />
-          <button type='submit' aria-label='Add a team'>
-             Add
+          <button type='submit' aria-label='signup-new-user'>
+             signup
           </button>
     
         </form>
       );
     }
+
+    export default  SigUpForm;
