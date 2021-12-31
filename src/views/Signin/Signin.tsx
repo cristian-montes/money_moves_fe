@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import { useHistory } from "react-router-dom";
 import SignInForm from "../../components/Auth/SingInForm";
-import { existingUserSignIn } from "../../Utils/fetch-utils";
+import { existingUserSignIn } from "../../Utils/auth-fetch-utils";
 
 
 export default function SingIn(){

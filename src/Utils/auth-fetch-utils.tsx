@@ -46,5 +46,20 @@ export async function existingUserSignIn(singInCredentials: ExistingUserSingInDT
     const data = await response.json();
     console.log('data', data);
     
-    return data.token;
+    return data;
+}
+
+export async function logoutUser() {
+    
+    const searchRecipientURL = `${url}/auth/logout`; 
+    await fetch(searchRecipientURL, {
+        method: 'GET',
+        // credentials: 'include',
+        headers: {
+        //   'Authorization': token,
+          'Content-Type': 'application/json'
+        }
+    });
+    // const recipientData = await response.json();
+    // return recipientData;
 }

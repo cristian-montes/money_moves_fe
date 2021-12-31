@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import SigUpForm from "../../components/Auth/SignUpForm";
-import { newUserSignUp } from "../../Utils/fetch-utils";
+import { newUserSignUp } from "../../Utils/auth-fetch-utils";
 
 export default function SignUp(){
     const [name, setName ] = useState<string>('');
