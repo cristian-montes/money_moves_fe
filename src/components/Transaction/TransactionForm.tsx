@@ -28,3 +28,4 @@ const RecipientSearchForm: React.FC<NewTransactionProps>= ({email, setEmail, han
 }
 
 export default RecipientSearchForm;
+

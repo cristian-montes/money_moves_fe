@@ -1,12 +1,19 @@
 
 const url = 'https://sleepy-garden-91367.herokuapp.com';
 
-export async function newTransaction(transactionInfo: string){
+interface transactionProps {
+    recipient_id: number,
+    amount: number
+}
 
-    const authURL = `${url}/transactions/makeTransaction`
+
+export async function newTransaction(transactionInfo: transactionProps){
+
+    const authURL = `${url}/transactions/makeTransaction`;
 
     const response = await fetch(authURL, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -14,7 +21,7 @@ export async function newTransaction(transactionInfo: string){
     });
 
     const data = await response.json();
-    // console.log('data', data);
+    console.log('data', data);
     return data.token;
 }
 
