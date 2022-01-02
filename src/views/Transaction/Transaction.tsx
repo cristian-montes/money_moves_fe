@@ -2,6 +2,8 @@ import React,{useState} from "react";
 
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useHistory } from "react-router-dom";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import RecipientSearchForm from "../../components/Transaction/TransactionForm";
 import { getRecipient, newTransaction } from "../../Utils/transaction-fetch-utils";
 import { logoutUser } from "../../Utils/auth-fetch-utils";
@@ -65,7 +67,7 @@ export default function Transaction(){
             />
             <form onSubmit={handleTransaction}>
                 <label htmlFor='amount'> Amount: </label>
-                <input 
+                <TextField 
                     placeholder="$0.00"
                     id='amount'
                     name='amount'
@@ -74,11 +76,11 @@ export default function Transaction(){
                     onChange={(event) => setAmount(event.target.value)}
         />
                 <CardElement />
-                <button>Transfer</button>
+                <Button>Transfer</Button>
             </form>
-            <button onClick={handleLogout}>
+            <Button onClick={handleLogout}>
                 logout
-            </button>
+            </Button>
         </div>
        
     )

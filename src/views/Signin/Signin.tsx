@@ -1,38 +1,51 @@
 import React,{useState} from "react";
+
 import { useHistory } from "react-router-dom";
 import SignInForm from "../../components/Auth/SingInForm";
 import { existingUserSignIn } from "../../Utils/auth-fetch-utils";
+import { errorMessageStyles, containerStyles, headerStyles } from "./SigninStyles";
+
 
 
 export default function SingIn(){
 
     const [email, setEmail ] = useState<string>('');
     const [password_hash, setPassword ] = useState<string>('');
+    const [ errorMessage, setErrorMessage] = useState<string>('');
     const history = useHistory();
 
     const handleSubmitSignIn = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        await existingUserSignIn ({
+        const userInfo = await existingUserSignIn ({
             email,
             password_hash,
         });
 
-        setEmail('')
-        setPassword('')
+        if(userInfo.status === 401) { 
+            setErrorMessage('The email or password entered is incorrect. Please try again.');
+            return;
+        } else { 
+            setEmail('')
+            setPassword('')
+            history.push('/transaction')
 
+        }
 
-        history.push('/transaction')
     }
 
 
     return(
-    <SignInForm
-        email = {email}
-        setEmail = {setEmail}
-        password = {password_hash} 
-        setPassword = {setPassword}
-        handleSubmitSignIn ={handleSubmitSignIn }
-    />
+        <div style={containerStyles}> 
+            <p style={headerStyles}>Sign In To Your Account:</p>
+            <SignInForm
+                email={email}
+                setEmail={setEmail}
+                password={password_hash} 
+                setPassword={setPassword}
+                handleSubmitSignIn={handleSubmitSignIn}
+                />
+            <p style={errorMessageStyles}>{errorMessage}</p>
+        </div>
     )
 }

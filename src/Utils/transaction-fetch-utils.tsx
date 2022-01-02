@@ -13,6 +13,7 @@ export async function newTransaction(transactionInfo: transactionProps){
 
     const response = await fetch(authURL, {
         method: 'POST',
+        // mode: 'cors',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
@@ -30,7 +31,7 @@ export async function getRecipient(email:string) {
     const searchRecipientURL = `${url}/transactions/searchrecipient/${email}`; 
     const response = await fetch(searchRecipientURL, {
         method: 'GET',
-        // credentials: 'include',
+        credentials: 'include',
         headers: {
         //   'Authorization': token,
           'Content-Type': 'application/json'

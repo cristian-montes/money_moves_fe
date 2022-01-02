@@ -1,4 +1,8 @@
 import React from "react";
+import TextField from '@mui/material/TextField';
+import Button from'@mui/material/Button'
+
+
 
 interface SignUpProps {
     name : string;
@@ -15,16 +19,16 @@ interface SignUpProps {
 const SigUpForm: React.FC<SignUpProps> = ({name, setName, email, setEmail, password, setPassword,connectedAcctId, setConnectedAccId, handleSubmitSignUp}) => {
     return (
         <form onSubmit={handleSubmitSignUp}> 
-          <label htmlFor="name"> Name: </label>
-          <input 
+          <label htmlFor="name"> Enter your first name: </label>
+          <TextField 
             id='name'
             name='name'
             type='text'
             value = {name }
             onChange={(event) => setName(event.target.value)} 
           />
-          <label htmlFor='email'> Email: </label>
-          <input 
+          <label htmlFor='email'> Enter your email: </label>
+          <TextField 
             id='email'
             name='email'
             type='text'
@@ -32,8 +36,8 @@ const SigUpForm: React.FC<SignUpProps> = ({name, setName, email, setEmail, passw
             onChange={(event) => setEmail(event.target.value)}
           />
     
-          <label htmlFor='password'> password: </label>
-          <input 
+          <label htmlFor='password'> Enter a new password: </label>
+          <TextField 
             id='password'
             name='password'
             type='text'
@@ -41,17 +45,17 @@ const SigUpForm: React.FC<SignUpProps> = ({name, setName, email, setEmail, passw
             onChange={(event) => setPassword(event.target.value)}
           />
 
-          <label htmlFor='Connected Account ID#'> Connected Acct ID#: </label>
-          <input 
+          <label htmlFor='Connected Account ID#'> Stripe Account ID#: </label>
+          <TextField 
             id='Connected Account ID#'
             name='Connected Account ID#'
             type='text'
             value ={connectedAcctId}
             onChange={(event) => setConnectedAccId(event.target.value)}
           />
-          <button type='submit' aria-label='signup-new-user'>
-             signup
-          </button>
+          <Button type='submit' aria-label='signup-new-user'>
+             Sign Up
+          </Button>
     
         </form>
       );

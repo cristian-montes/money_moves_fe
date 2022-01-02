@@ -1,13 +1,31 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Button from'@mui/material/Button'
+import ButtonGroup  from "@mui/material/ButtonGroup";
+import { headerStyles, containerStyles, promptStyles, buttonGroupStyles } from "./HomeStyles";
 
 
 const Home = () =>{
+    const history = useHistory()
+
+
     return(
-    <div>
-        <h1>Make Some Money Moves!</h1>
-        <Link to={'/signin'}>Make MoneyMoves</Link> <br/>
-        <Link to={'/signup'}> Join MoneyMoves</Link>
+    <div style={containerStyles}>
+        <h1 style={headerStyles}>Welcome to Money Moves</h1>
+        <h3 style={promptStyles}>Where would you like to start?</h3>
+
+        <ButtonGroup variant="contained" aria-label="an outlined button group" style={buttonGroupStyles}>
+            <Button 
+                onClick={() => history.push('/signin')}
+                aria-label="Click to Join MoneyMoves."
+            >SignIn
+            </Button>
+            <Button 
+                onClick={() => history.push('/signup')}
+                aria-label="Click to make a transaction."
+            >SignUp
+            </Button>
+        </ButtonGroup>
     </div>
     )
 }

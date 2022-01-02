@@ -1,4 +1,7 @@
 import React from "react";
+import TextField from '@mui/material/TextField';
+
+
 
 interface NewTransactionProps {
     email : string;
@@ -10,7 +13,7 @@ const RecipientSearchForm: React.FC<NewTransactionProps>= ({email, setEmail, han
     return(
         <form onSubmit={handleRecipientSearch}> 
         <label htmlFor='email'> Email: </label>
-        <input 
+        <TextField 
             placeholder="recipient@email.com"
           id='email'
           name='email'
