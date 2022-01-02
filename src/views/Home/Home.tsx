@@ -18,12 +18,12 @@ const Home = () =>{
             <Button 
                 onClick={() => history.push('/signin')}
                 aria-label="Click to Join MoneyMoves."
-            >SignIn
+            >Sign In
             </Button>
             <Button 
                 onClick={() => history.push('/signup')}
                 aria-label="Click to make a transaction."
-            >SignUp
+            >Sign Up
             </Button>
         </ButtonGroup>
     </div>

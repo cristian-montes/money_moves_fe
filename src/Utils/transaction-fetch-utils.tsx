@@ -1,5 +1,7 @@
 
-const url = 'https://sleepy-garden-91367.herokuapp.com';
+// const url = 'https://sleepy-garden-91367.herokuapp.com';
+const url ='http://localhost:7890'
+
 
 interface transactionProps {
     recipient_id: number,
@@ -13,7 +15,6 @@ export async function newTransaction(transactionInfo: transactionProps){
 
     const response = await fetch(authURL, {
         method: 'POST',
-        // mode: 'cors',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
@@ -27,7 +28,7 @@ export async function newTransaction(transactionInfo: transactionProps){
 }
 
 export async function getRecipient(email:string) {
-    console.log('email2', email)
+    // console.log('email2', email)
     const searchRecipientURL = `${url}/transactions/searchrecipient/${email}`; 
     const response = await fetch(searchRecipientURL, {
         method: 'GET',

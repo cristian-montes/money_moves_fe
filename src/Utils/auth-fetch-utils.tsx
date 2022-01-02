@@ -1,5 +1,6 @@
 
-const url = 'https://sleepy-garden-91367.herokuapp.com';
+// const url = 'https://sleepy-garden-91367.herokuapp.com';
+const url ='http://localhost:7890'
 
 interface newUserSingUpDT {
     name : string;

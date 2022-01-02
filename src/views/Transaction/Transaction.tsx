@@ -7,38 +7,46 @@ import Button from '@mui/material/Button';
 import RecipientSearchForm from "../../components/Transaction/TransactionForm";
 import { getRecipient, newTransaction } from "../../Utils/transaction-fetch-utils";
 import { logoutUser } from "../../Utils/auth-fetch-utils";
+import { conversitionCentsToDollars } from "../../Utils/helpers";
 
 
 
 export default function Transaction(){
-    const [email, setEmail ] = useState<string>('lalo@gmail.com');
-    const [amount, setAmount ] = useState<string>('100');
-    const [userId, setUserId] = useState(1)
+    const [email, setEmail ] = useState<string>('');
+    const [amount, setAmount ] = useState<string>('');
+    const [recipientId, setRecipientId] = useState<string>('')
     const history = useHistory();
 
     const handleRecipientSearch = async (event: React.FormEvent) =>{
             event.preventDefault();
 
-        // const recipientData = await getRecipient(email);
-        // console.log('recipientData', recipientData);
+        const recipientData = await getRecipient(email);
+        console.log('recipientData', recipientData);
+        
+        if(recipientData.email !== email){
+            setEmail('');
+            return alert('No users under that emial found')
+        }
 
+        setRecipientId(recipientData.id);
         setEmail('');
-        // if(!recipientData) return alert('Invalid user')
     }
 
     const handleLogout = async (event: React.FormEvent) =>{
-        //     event.preventDefault();
+        event.preventDefault();
         await logoutUser();
         await history.push('/');
     }
 
-    //stripe block
+    //*********------------- stripe block ---------------------- ********
     const stripe = useStripe();
     const elements = useElements();
   
-
+    const convertedAmount = conversitionCentsToDollars(+amount)
     const handleTransaction = async (event: React.FormEvent) =>{
         event.preventDefault();
+        console.log('recipientId',recipientId)
+
         try {
           const { error, paymentMethod } = await stripe!.createPaymentMethod({
             type: 'card',
@@ -46,8 +54,8 @@ export default function Transaction(){
           });
     
           await newTransaction({
-            recipient_id:+userId,
-            amount: +amount
+            recipient_id:+recipientId,
+            amount:convertedAmount
           })
         
         } catch(err) {
@@ -76,7 +84,8 @@ export default function Transaction(){
                     onChange={(event) => setAmount(event.target.value)}
         />
                 <CardElement />
-                <Button>Transfer</Button>
+                {/* <Button>Transfer</Button> */}
+                <button> Transfer</button>
             </form>
             <Button onClick={handleLogout}>
                 logout
