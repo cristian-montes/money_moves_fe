@@ -41,8 +41,7 @@ const CustomTextField
 
 const SignInForm: React.FC<SignInProps> = ({email, setEmail, password, setPassword, handleSubmitSignIn, errorMessage })=>{
     return(
-        <form onSubmit={handleSubmitSignIn}
-          style={formContainer}> 
+        <form onSubmit={handleSubmitSignIn} style={formContainer}> 
           <CustomTextField
            sx={{ input: { color: 'white' }}}         
            id="outlined-email" 
