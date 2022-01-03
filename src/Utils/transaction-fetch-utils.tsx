@@ -42,3 +42,17 @@ export async function getRecipient(email:string) {
     return recipientData;
 }
 
+export async function getUserTransactionHistory() {
+    // console.log('email2', email)
+    const searchRecipientURL = `${url}/transactions/transactionhistory`; 
+    const response = await fetch(searchRecipientURL, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+        //   'Authorization': token,
+          'Content-Type': 'application/json'
+        }
+    });
+    const transactionHistoryData = await response.json();
+    return transactionHistoryData;
+}
