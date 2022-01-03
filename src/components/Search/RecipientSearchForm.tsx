@@ -1,5 +1,10 @@
 import React from "react";
-import TextField from '@mui/material/TextField';
+import { formDiv, inputLabel, searchButton, searchDiv, buttonDiv, searchField } from "./RecipientSearchFormStyles";
+import SearchIcon from '@mui/icons-material/Search';
+
+
+import { InputLabel, TextField, InputAdornment, Button, Box } from "@mui/material";
+
 
 
 
@@ -11,21 +16,34 @@ interface NewTransactionProps {
 
 const RecipientSearchForm: React.FC<NewTransactionProps>= ({email, setEmail, handleRecipientSearch}) =>{
     return(
-        <form onSubmit={handleRecipientSearch}> 
-        <label htmlFor='email'> Email: </label>
-        <TextField 
+        <form onSubmit={handleRecipientSearch} style={formDiv}> 
+        <div style={searchDiv}>
+          <InputLabel htmlFor='email' style={inputLabel}>Search for friend: </InputLabel>
+          <TextField 
+            style={searchField}
             placeholder="recipient@email.com"
-          id='email'
-          name='email'
-          type='text'
-          value = {email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
+            size="small"
+            variant="outlined"
+            id='email'
+            name='email'
+            type='text'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon sx={{color: 'white'}}/>
+              </InputAdornment>
+              ) 
+            }}
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
 
-        <button type='submit' aria-label='search-recipient'>
-           Search
-        </button>
-  
+        </div>
+        <div style={buttonDiv}>
+          <Button type='submit' aria-label='search-recipient' variant="contained" style={searchButton}>
+            Search
+          </Button>
+        </div>
       </form>
     )
 }

@@ -1,18 +1,19 @@
-import { borderRadius } from '@mui/system';
 import * as CSS from 'csstype';
 
 export const header: CSS.Properties = { 
     textAlign: 'center',
     color: '#6A7FDB',
+   
 
    
 }
 
 export const searchFormDiv: CSS.Properties = { 
-    backgroundColor: 'pink',
+    // backgroundColor: 'pink',
     width: '32rem',
     height: '5rem',
     margin: '0 auto',
+    marginBottom: '5rem'
 }
 
 export const transactionFormContainer: CSS.Properties = { 
