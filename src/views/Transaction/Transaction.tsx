@@ -1,10 +1,11 @@
 import React,{useState} from "react";
-
+import { amountInput, buttonDiv, header, searchFormDiv, transactionDiv, transactionFormContainer, transferButton } from './TransactionStyles';
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useHistory } from "react-router-dom";
 import TextField from '@mui/material/TextField';
+import { FilledInput, OutlinedInput, InputLabel, InputAdornment } from "@mui/material";
 import Button from '@mui/material/Button';
-import RecipientSearchForm from "../../components/Transaction/TransactionForm";
+import RecipientSearchForm from "../../components/Search/RecipientSearchForm";
 import { getRecipient, newTransaction } from "../../Utils/transaction-fetch-utils";
 import { logoutUser } from "../../Utils/auth-fetch-utils";
 import { conversitionCentsToDollars } from "../../Utils/helpers";
@@ -25,9 +26,15 @@ export default function Transaction(){
         
         if(recipientData.email !== email){
             setEmail('');
-            return alert('No users under that emial found')
+            return alert('No users under that email found')
         }
+        
+        
+        //     return( <div>
+        //        { `${recipientData.name}, ${recipientData.email}`}
 
+        //     </div>)
+        
         setRecipientId(recipientData.id);
         setEmail('');
     }
@@ -67,27 +74,47 @@ export default function Transaction(){
 
     return(
         <div>
-            <h1> Make a Money Move my friend</h1>
-            <RecipientSearchForm
-                email={email}
-                setEmail ={setEmail}
-                handleRecipientSearch = {handleRecipientSearch}
-            />
-            <form onSubmit={handleTransaction}>
-                <label htmlFor='amount'> Amount: </label>
-                <TextField 
-                    placeholder="$0.00"
-                    id='amount'
-                    name='amount'
-                    type='text'
-                    value = {amount}
-                    onChange={(event) => setAmount(event.target.value)}
-        />
-                <CardElement />
-                {/* <Button>Transfer</Button> */}
-                <button> Transfer</button>
+            <h1 style={header}>Send Money with MoneyMoves</h1>
+            <div style={searchFormDiv}>
+                <RecipientSearchForm
+                    email={email}
+                    setEmail ={setEmail}
+                    handleRecipientSearch = {handleRecipientSearch}
+                />
+            </div>
+            {/* <div>Sending To: me!</div> */}
+            <form onSubmit={handleTransaction} style={transactionFormContainer}>
+                <div style={transactionDiv}>
+                    {/* <label htmlFor='amount'>Amount: </label>
+                    <TextField 
+                        id='amount'
+                        name='amount'
+                        type='text'
+                        value = {amount}
+                        onChange={(event) => setAmount(event.target.value)}
+                        /> */}
+                    {/* <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel> */}
+                    <TextField
+                        id="outlined-adornment-amount"
+                        label="Enter Transfer Amount Here:"
+                        type={'number'}
+                        style={amountInput}
+                        value={amount}
+                        onChange={(event) => setAmount(event.target.value)}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                          }}
+                        // startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                    />
+                    <CardElement />
+                </div>
+                <div style={buttonDiv}>
+                    <Button type="submit" variant="contained" style={transferButton}>
+                        Transfer
+                    </Button>
+                </div>
             </form>
-            <Button onClick={handleLogout}>
+            <Button onClick={handleLogout} variant="contained">
                 logout
             </Button>
         </div>

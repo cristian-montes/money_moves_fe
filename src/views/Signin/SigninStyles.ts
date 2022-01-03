@@ -9,20 +9,15 @@ export const containerStyles: CSS.Properties = {
     margin: '0 auto',
     marginTop: '5rem',
     borderRadius: '.4rem',
-    height: '18rem',
+    height: '20rem',
     padding: '2rem',
     justifyContent: 'center',
     alignContent: 'center',
     display: 'flex',
     flexDirection: 'column',
-    flexWrap: 'wrap',   
+    // flexWrap: 'wrap',   
 }
-export const errorMessageStyles: CSS.Properties = { 
-    color: 'red',
-    textAlign: 'center',
-    marginTop: '3rem',
-    fontSize: '.9rem',
-}
+
 export const headerStyles: CSS.Properties = { 
     textAlign: 'center',
     color: '#6A7FDB',

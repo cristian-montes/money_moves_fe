@@ -3,7 +3,7 @@ import React,{useState} from "react";
 import { useHistory } from "react-router-dom";
 import SignInForm from "../../components/Auth/SingInForm";
 import { existingUserSignIn } from "../../Utils/auth-fetch-utils";
-import { errorMessageStyles, containerStyles, headerStyles } from "./SigninStyles";
+import { containerStyles, headerStyles } from "./SigninStyles";
 
 
 
@@ -44,8 +44,8 @@ export default function SingIn(){
                 password={password_hash} 
                 setPassword={setPassword}
                 handleSubmitSignIn={handleSubmitSignIn}
+                errorMessage={errorMessage}
                 />
-            <p style={errorMessageStyles}>{errorMessage}</p>
         </div>
     )
 }

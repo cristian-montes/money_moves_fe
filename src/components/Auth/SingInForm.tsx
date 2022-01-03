@@ -1,6 +1,6 @@
 import React from "react";
-import { inputs, formContainer, button } from './SignInFormStyles';
-import { alpha, styled } from '@mui/material/styles';
+import { inputs, formContainer, button, errorMessageStyles } from './SignInFormStyles';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TextField, { TextFieldProps} from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -15,17 +15,18 @@ interface SignInProps {
     password : string;
     setPassword : React.Dispatch<React.SetStateAction <string>>;
     handleSubmitSignIn :(event: React.FormEvent) => void;
+    errorMessage: string;
 }
 
 const CustomTextField
  = styled(TextField)({
   '& label.Mui-focused': {
-    color: '#45CB85',
-    
+    color: '#45CB85', 
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
       borderColor: 'lightgrey',
+      color: 'white'
     },
     '&:hover fieldset': {
       borderColor: 'white',
@@ -38,12 +39,12 @@ const CustomTextField
 
 
 
-
-const SignInForm: React.FC<SignInProps> = ({email, setEmail, password, setPassword, handleSubmitSignIn})=>{
+const SignInForm: React.FC<SignInProps> = ({email, setEmail, password, setPassword, handleSubmitSignIn, errorMessage })=>{
     return(
         <form onSubmit={handleSubmitSignIn}
           style={formContainer}> 
           <CustomTextField
+           sx={{ input: { color: 'white' }}}         
            id="outlined-email" 
            label="Email"
            style={inputs}
@@ -53,6 +54,7 @@ const SignInForm: React.FC<SignInProps> = ({email, setEmail, password, setPasswo
            onChange={(event) => setEmail(event.target.value)}
            />
           <CustomTextField
+            sx={{ input: { color: 'white' }}}         
             id="outlined-password" 
             label="Password" 
             style={inputs}
@@ -61,6 +63,8 @@ const SignInForm: React.FC<SignInProps> = ({email, setEmail, password, setPasswo
             value = { password}
             onChange={(event) => setPassword(event.target.value)}
             />
+
+            <p style={errorMessageStyles}>{errorMessage}</p>
           <Button
           type="submit"
           variant="contained"
