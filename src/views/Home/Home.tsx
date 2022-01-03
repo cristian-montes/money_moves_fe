@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import Button from'@mui/material/Button'
 import ButtonGroup  from "@mui/material/ButtonGroup";
-import { headerStyles, containerStyles, promptStyles, buttonGroupStyles } from "./HomeStyles";
+import { headerStyles, containerStyles, promptStyles, buttonGroupStyles, buttons } from "./HomeStyles";
 
 
 const Home = () =>{
@@ -15,12 +15,14 @@ const Home = () =>{
         <h3 style={promptStyles}>Where would you like to start?</h3>
 
         <ButtonGroup variant="contained" aria-label="an outlined button group" style={buttonGroupStyles}>
-            <Button 
+            <Button
+                style={buttons} 
                 onClick={() => history.push('/signin')}
                 aria-label="Click to Join MoneyMoves."
             >Sign In
             </Button>
             <Button 
+                style={buttons} 
                 onClick={() => history.push('/signup')}
                 aria-label="Click to make a transaction."
             >Sign Up

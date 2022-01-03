@@ -1,14 +1,8 @@
 import * as CSS from 'csstype';
-import { white } from 'material-ui/styles/colors';
 
-const deepBlue = '#020887';
-const paleBlue = '#334195';
-const lightBlue = '#647AA3';
-const paleGreen = '#95B2B0'
-const lightGreen = '#C6EBBE'
+
 
 export const containerStyles: CSS.Properties = { 
-    backgroundColor: paleGreen,
     width: '100%',
     height: '100%',
     justifyContent: 'center',
@@ -18,17 +12,22 @@ export const containerStyles: CSS.Properties = {
     flexWrap: 'wrap',   
 }
 export const headerStyles: CSS.Properties = { 
-    color: deepBlue,
+    color: '#6A7FDB',
     textAlign: 'center',
 
 }
 
 export const promptStyles: CSS.Properties = { 
+    marginBottom: '5rem',
     color: 'white',
     textAlign: 'center'
 }
 export const buttonGroupStyles: CSS.Properties = { 
-    // width: '100%',
-    // backgroundColor: 'transparent',
     justifyContent: 'center'
 }
+
+export const buttons: CSS.Properties = { 
+    backgroundColor: '#45CB85'
+}
+
+

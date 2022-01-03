@@ -1,7 +1,10 @@
 import React from "react";
+import { inputs, formContainer, button } from './SignInFormStyles';
+import { alpha, styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import TextField, { TextFieldProps} from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
+
 
 import Button from'@mui/material/Button'
 
@@ -14,54 +17,55 @@ interface SignInProps {
     handleSubmitSignIn :(event: React.FormEvent) => void;
 }
 
+const CustomTextField
+ = styled(TextField)({
+  '& label.Mui-focused': {
+    color: '#45CB85',
+    
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'lightgrey',
+    },
+    '&:hover fieldset': {
+      borderColor: 'white',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#45CB85',
+    },
+  },
+});
+
+
+
 
 const SignInForm: React.FC<SignInProps> = ({email, setEmail, password, setPassword, handleSubmitSignIn})=>{
     return(
-        <form onSubmit={handleSubmitSignIn}> 
-          
-          <TextField 
-            id="outlined-email" 
-            label="Email" 
-            type={'text'}
-            variant="outlined" 
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            />
-          <TextField 
+        <form onSubmit={handleSubmitSignIn}
+          style={formContainer}> 
+          <CustomTextField
+           id="outlined-email" 
+           label="Email"
+           style={inputs}
+           type={'text'}
+           variant="outlined" 
+           value={email}
+           onChange={(event) => setEmail(event.target.value)}
+           />
+          <CustomTextField
             id="outlined-password" 
             label="Password" 
+            style={inputs}
             type={'password'}
             variant="outlined" 
             value = { password}
             onChange={(event) => setPassword(event.target.value)}
             />
           <Button
-          type="submit">Sign In</Button>
-
-
-
-        {/* <label htmlFor='email'> Email: </label>
-        <input 
-          id='email'
-          name='email'
-          type='text'
-          value = {email}
-          onChange={(event) => setEmail(event.target.value)}
-        /> */}
-  
-        {/* <label htmlFor='password'> password: </label>
-        <input 
-          id='password'
-          name='password'
-          type='text'
-          value = { password}
-          onChange={(event) => setPassword(event.target.value)}
-        /> */}
-
-        {/* <button type='submit' aria-label='signin-existing-user'>
-           signup
-        </button> */}
-  
+          type="submit"
+          variant="contained"
+          style={button}
+          >Sign In</Button>  
       </form>
     );
   }

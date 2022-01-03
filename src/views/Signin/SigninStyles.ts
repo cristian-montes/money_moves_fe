@@ -1,16 +1,13 @@
 import * as CSS from 'csstype';
 
-const deepBlue = '#020887';
-const paleBlue = '#334195';
-const lightBlue = '#647AA3';
-const paleGreen = '#95B2B0'
-const lightGreen = '#C6EBBE'
+
 
 export const containerStyles: CSS.Properties = { 
-    // backgroundColor: paleGreen,
-    border: '.1rem solid black',
+    border: '.1rem solid darkgrey',
+    boxShadow: '0 8px 8px -4px #45CB',
     width: '20rem',
     margin: '0 auto',
+    marginTop: '5rem',
     borderRadius: '.4rem',
     height: '18rem',
     padding: '2rem',
@@ -28,6 +25,6 @@ export const errorMessageStyles: CSS.Properties = {
 }
 export const headerStyles: CSS.Properties = { 
     textAlign: 'center',
-    color: deepBlue,
+    color: '#6A7FDB',
     fontWeight: 'bold'
 }
