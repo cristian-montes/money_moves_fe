@@ -54,22 +54,37 @@ export default function Transaction(){
         event.preventDefault();
         console.log('recipientId',recipientId)
 
-        try {
-        const {paymentMethod } = await stripe!.createPaymentMethod({
-            type: 'card',
-            card: elements?.getElement(CardElement)!,
-          });
-    
-          await newTransaction({
-            recipient_id:+recipientId,
-            amount:convertedAmount,
-            payment_method_id:paymentMethod!.id
-          })
-        
-        } catch(err) {
-          console.log(err)
-
+        if(!stripe || !elements) {
+            return;
         }
+        const card = elements.getElement(CardElement);
+
+        if (card == null) {
+            return;
+        }
+
+        // try {
+        const {error, paymentMethod } = await stripe.createPaymentMethod({
+            type: 'card',
+            card
+          });
+          console.log('paymentmethod', paymentMethod)
+          if (error) {
+            console.log('[error]', error);
+          } else {
+        
+            await newTransaction({
+              recipient_id:+recipientId,
+              amount:convertedAmount,
+              payment_method_id:paymentMethod!.id
+            })
+          }
+
+        
+        // } catch(err) {
+        //   console.log(err)
+
+        // }
         
      };
 
@@ -108,7 +123,8 @@ export default function Transaction(){
                           }}
                         // startAdornment={<InputAdornment position="start">$</InputAdornment>}
                     />
-                    <CardElement />
+                    <label htmlFor="card-element">Card</label>
+                    <CardElement id="card-element"/>
                 </div>
                 <div style={buttonDiv}>
                     <Button type="submit" variant="contained" style={transferButton}>
