@@ -1,6 +1,6 @@
 
-// const url = 'https://themoneymoves.herokuapp.com';
-const url = 'http://localhost:7890';
+const url = 'https://themoneymoves.herokuapp.com';
+// const url = 'http://localhost:7890';
 
 
 interface newUserSingUpDT {
