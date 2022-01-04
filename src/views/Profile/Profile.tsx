@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { getUserTransactionHistory } from "../../Utils/transaction-fetch-utils";
 
-interface transactionHistory 
-    {
-        senderid: string,
-        name: string,
-        email: string,
-        amount: 50
-        recipientid:string,
-        paymentid: string
-    } 
+// interface transactionHistory 
+//     {
+//         senderid: string,
+//         name: string,
+//         email: string,
+//         amount: 50
+//         recipientid:string,
+//         paymentid: string
+//     } 
 
 export default function Profile(){
     const [transactions, setTransactions] = useState<any>([])

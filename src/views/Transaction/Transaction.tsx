@@ -3,7 +3,7 @@ import { amountInput, buttonDiv, header, searchFormDiv, transactionDiv, transact
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useHistory } from "react-router-dom";
 import TextField from '@mui/material/TextField';
-import { FilledInput, OutlinedInput, InputLabel, InputAdornment } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import Button from '@mui/material/Button';
 import RecipientSearchForm from "../../components/Search/RecipientSearchForm";
 import { getRecipient, newTransaction } from "../../Utils/transaction-fetch-utils";
@@ -55,7 +55,7 @@ export default function Transaction(){
         console.log('recipientId',recipientId)
 
         try {
-          const { error, paymentMethod } = await stripe!.createPaymentMethod({
+           await stripe!.createPaymentMethod({
             type: 'card',
             card: elements?.getElement(CardElement)!,
           });

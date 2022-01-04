@@ -1,6 +1,6 @@
 
-// const url = 'https://sleepy-garden-91367.herokuapp.com';
-const url ='http://localhost:7890'
+const url = 'https://themoneymoves.herokuapp.com';
+// const url ='http://localhost:7890'
 
 interface newUserSingUpDT {
     name : string;
@@ -20,6 +20,7 @@ export async function newUserSignUp(singupInfo: newUserSingUpDT){
 
     const response = await fetch(authURL, {
         method: 'POST',
+        mode:'cors',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
@@ -39,6 +40,7 @@ export async function existingUserSignIn(singInCredentials: ExistingUserSingInDT
 
     const response = await fetch(authURL, {
         method: 'POST',
+        mode: 'cors',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
@@ -57,6 +59,7 @@ export async function logoutUser() {
     const searchRecipientURL = `${url}/auth/logout`; 
     await fetch(searchRecipientURL, {
         method: 'GET',
+        mode: 'cors',
         credentials: 'include',
         headers: {
         //   'Authorization': token,
