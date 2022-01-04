@@ -1,9 +1,12 @@
 
-const url = 'https://themoneymoves.herokuapp.com';
+// const url = 'https://themoneymoves.herokuapp.com';
+const url = 'http://localhost:7890';
+
 
 interface transactionProps {
     recipient_id: number,
-    amount: number
+    amount: number,
+    payment_method_id: string
 }
 
 

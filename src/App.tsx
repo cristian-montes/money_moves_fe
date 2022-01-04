@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import SigUpForm from './components/Auth/SignUpForm';
+import Header from './components/Header/Header'
 import Home from './views/Home/Home';
 import Profile from './views/Profile/Profile';
 import SignIn from './views/Signin/Signin';
@@ -11,6 +12,7 @@ import Transaction from './views/Transaction/Transaction';
 function App() {
   return (
     <div className="App">
+      <Header/>
           <Router>
             <Switch>
             <Route 

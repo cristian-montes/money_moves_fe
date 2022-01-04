@@ -32,7 +32,6 @@ export default function Transaction(){
         
         //     return( <div>
         //        { `${recipientData.name}, ${recipientData.email}`}
-
         //     </div>)
         
         setRecipientId(recipientData.id);
@@ -46,32 +45,35 @@ export default function Transaction(){
     }
 
     //*********------------- stripe block ---------------------- ********
+
     const stripe = useStripe();
     const elements = useElements();
-  
     const convertedAmount = conversitionCentsToDollars(+amount)
+
     const handleTransaction = async (event: React.FormEvent) =>{
         event.preventDefault();
         console.log('recipientId',recipientId)
 
         try {
-           await stripe!.createPaymentMethod({
+        const {paymentMethod } = await stripe!.createPaymentMethod({
             type: 'card',
             card: elements?.getElement(CardElement)!,
           });
     
           await newTransaction({
             recipient_id:+recipientId,
-            amount:convertedAmount
+            amount:convertedAmount,
+            payment_method_id:paymentMethod!.id
           })
         
         } catch(err) {
-          console.log(err);
+          console.log(err)
+
         }
         
      };
 
-
+    //*********------------- stripe block ---------------------- ********
     return(
         <div>
             <h1 style={header}>Send Money with MoneyMoves</h1>
@@ -113,10 +115,13 @@ export default function Transaction(){
                         Transfer
                     </Button>
                 </div>
-            </form>
+            <Button onClick={() => history.push('/profile')}>
+                My Profile
+            </Button>
             <Button onClick={handleLogout} variant="contained">
                 logout
             </Button>
+            </form>
         </div>
        
     )
