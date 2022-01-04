@@ -16,9 +16,9 @@ import { loadStripe } from '@stripe/stripe-js';
 //   document.getElementById('root')
 // );
 
-// const stripePromise = loadStripe('pk_test_51K9YyABg9yAQBAw84bBZLY80FWMZ4hXz8ND78wNYA0kfDXip8mLTB5dOn2bsaQB8bkFE5FeJfbvywNxqPfZI0Ept0095gPwoiT');
+const stripePromise = loadStripe('pk_test_51K9YyABg9yAQBAw84bBZLY80FWMZ4hXz8ND78wNYA0kfDXip8mLTB5dOn2bsaQB8bkFE5FeJfbvywNxqPfZI0Ept0095gPwoiT');
 
-const stripePromise = loadStripe('pk_live_51K9YyABg9yAQBAw8KoE7qMWasv2veIMvSy64J6cSklHp4lhC4nqJXPBqjcmzlYy2zyz1OYCyakQLpnR6g15cvtAk00ohqAqB7T')
+// const stripePromise = loadStripe('pk_live_51K9YyABg9yAQBAw8KoE7qMWasv2veIMvSy64J6cSklHp4lhC4nqJXPBqjcmzlYy2zyz1OYCyakQLpnR6g15cvtAk00ohqAqB7T')
 
 render(
 
