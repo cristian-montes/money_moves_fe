@@ -1,6 +1,8 @@
 import React,{useState} from "react";
 import { amountInput, buttonDiv, header, searchFormDiv, transactionDiv, transactionFormContainer, transferButton } from './TransactionStyles';
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+// import StatusMessages, {useMessages} from './StatusMessages';
+
 import { useHistory } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import { InputAdornment } from "@mui/material";
@@ -22,7 +24,7 @@ export default function Transaction(){
             event.preventDefault();
 
         const recipientData = await getRecipient(email);
-        console.log('recipientData', recipientData);
+        // console.log('recipientData', recipientData);
         
         if(recipientData.email !== email){
             setEmail('');
@@ -45,12 +47,13 @@ export default function Transaction(){
     }
 
     //*********------------- stripe block ---------------------- ********
-
     const stripe = useStripe();
     const elements = useElements();
     const convertedAmount = conversitionCentsToDollars(+amount)
+    
+    //*********------------- stripe block ---------------------- ********
 
-    const handleTransaction = async (event: React.FormEvent) =>{
+        const handleTransaction = async (event: React.FormEvent) =>{
         event.preventDefault();
         console.log('recipientId',recipientId)
 
@@ -63,32 +66,40 @@ export default function Transaction(){
             return;
         }
 
-        // try {
         const {error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card
           });
           console.log('paymentmethod', paymentMethod)
+
           if (error) {
             console.log('[error]', error);
-          } else {
+          } 
         
-            await newTransaction({
+          const { client_secret } = await newTransaction({
               recipient_id:+recipientId,
               amount:convertedAmount,
               payment_method_id:paymentMethod!.id
             })
-          }
 
-        
-        // } catch(err) {
-        //   console.log(err)
 
-        // }
-        
+        //*********-------- confirm payment --------------- ********
+        await stripe.confirmCardPayment(
+            client_secret, {
+               payment_method:{
+                card
+               }
+            }
+        )
+
+    //*********** ------------- stripe block ---------------------- ***********
      };
-
-    //*********------------- stripe block ---------------------- ********
+    
+    
+    
+    
+    
+    
     return(
         <div>
             <h1 style={header}>Send Money with MoneyMoves</h1>

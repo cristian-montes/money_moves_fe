@@ -1,7 +1,5 @@
 
 const url = 'https://themoneymoves.herokuapp.com';
-// const url = 'http://localhost:7890';
-
 
 interface newUserSingUpDT {
     name : string;
@@ -29,7 +27,6 @@ export async function newUserSignUp(singupInfo: newUserSingUpDT){
     });
 
     const data = await response.json();
-    // console.log('data', data);
     
     return data.token;
 }
@@ -59,10 +56,8 @@ export async function logoutUser() {
         method: 'GET',
         credentials: 'include',
         headers: {
-        //   'Authorization': token,
           'Content-Type': 'application/json'
         }
     });
-    // const recipientData = await response.json();
-    // return recipientData;
+
 }

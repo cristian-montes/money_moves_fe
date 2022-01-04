@@ -2,11 +2,7 @@ import React from "react";
 import { formDiv, inputLabel, searchButton, searchDiv, buttonDiv, searchField } from "./RecipientSearchFormStyles";
 import SearchIcon from '@mui/icons-material/Search';
 
-
 import { InputLabel, TextField, InputAdornment, Button } from "@mui/material";
-
-
-
 
 interface NewTransactionProps {
     email : string;

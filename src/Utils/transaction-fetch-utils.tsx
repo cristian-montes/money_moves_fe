@@ -1,7 +1,5 @@
 
 const url = 'https://themoneymoves.herokuapp.com';
-// const url = 'http://localhost:7890';
-
 
 interface transactionProps {
     recipient_id: number,
@@ -24,18 +22,18 @@ export async function newTransaction(transactionInfo: transactionProps){
     });
 
     const data = await response.json();
-    console.log('data', data);
-    return data.token;
+    // console.log('data', data);
+    return data;
 }
 
 export async function getRecipient(email:string) {
-    // console.log('email2', email)
+    
     const searchRecipientURL = `${url}/transactions/searchrecipient/${email}`; 
     const response = await fetch(searchRecipientURL, {
         method: 'GET',
         credentials: 'include',
         headers: {
-        //   'Authorization': token,
+     
           'Content-Type': 'application/json'
         }
     });
@@ -44,13 +42,13 @@ export async function getRecipient(email:string) {
 }
 
 export async function getUserTransactionHistory() {
-    // console.log('email2', email)
+    
     const searchRecipientURL = `${url}/transactions/transactionhistory`; 
     const response = await fetch(searchRecipientURL, {
         method: 'GET',
         credentials: 'include',
         headers: {
-        //   'Authorization': token,
+       
           'Content-Type': 'application/json'
         }
     });
