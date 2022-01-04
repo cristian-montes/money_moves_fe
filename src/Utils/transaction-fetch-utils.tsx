@@ -1,7 +1,5 @@
 
 const url = 'https://themoneymoves.herokuapp.com';
-// const url ='http://localhost:7890'
-
 
 interface transactionProps {
     recipient_id: number,

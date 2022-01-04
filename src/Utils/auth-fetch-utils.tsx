@@ -1,6 +1,5 @@
 
 const url = 'https://themoneymoves.herokuapp.com';
-// const url ='http://localhost:7890'
 
 interface newUserSingUpDT {
     name : string;
@@ -49,7 +48,6 @@ export async function existingUserSignIn(singInCredentials: ExistingUserSingInDT
     });
 
     const data = await response.json();
-    console.log('data', data);
     
     return data;
 }
