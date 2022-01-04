@@ -3,7 +3,7 @@ import { formDiv, inputLabel, searchButton, searchDiv, buttonDiv, searchField } 
 import SearchIcon from '@mui/icons-material/Search';
 
 
-import { InputLabel, TextField, InputAdornment, Button, Box } from "@mui/material";
+import { InputLabel, TextField, InputAdornment, Button } from "@mui/material";
 
 
 
