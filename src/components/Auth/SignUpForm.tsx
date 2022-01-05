@@ -1,10 +1,10 @@
 import React from "react";
 import Button from'@mui/material/Button'
 import Box from '@mui/material/Box';
-import { buttonContainer, fieldContainer, formContainer, signUpButton, createAccountHeader } from './SignUpFormStyles'
+import { buttonContainer, fieldContainer, formContainer, signUpButton, link, createAccountHeader, signUpHere } from './SignUpFormStyles'
 
 import CustomField from '../CustomField/CustomField';
-// import { connected } from "process";
+
 
 interface SignUpProps {
     name : string;
@@ -71,6 +71,8 @@ const SigUpForm: React.FC<SignUpProps> = ({name, setName, email, setEmail, passw
               value ={connectedAcctId}
               onChange={(event) => setConnectedAccId((event.target as HTMLInputElement).value)}
               />
+              <p style={signUpHere}>No Stripe account?  <a rel="noreferrer" target="_blank" href="https://dashboard.stripe.com/register/connect" style={link}> Sign up here! </a></p>
+
             </div>
             <div style={buttonContainer}>
               <Button type='submit' disabled={!connectedAcctId.length} aria-label='signup-new-user' variant="contained" style={signUpButton}>

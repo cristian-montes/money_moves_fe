@@ -1,6 +1,4 @@
-import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import SigUpForm from './components/Auth/SignUpForm';
 import Header from './components/Header/Header'
 import Home from './views/Home/Home';
 import Profile from './views/Profile/Profile';
@@ -38,8 +36,6 @@ function App() {
               exact 
               component={Profile}
             />
-            
-
             </Switch>
           </Router>
     </div>

@@ -10,7 +10,7 @@ export const searchFormDiv: CSS.Properties = {
     width: '32rem',
     height: '5rem',
     margin: '0 auto',
-    marginBottom: '5rem'
+    marginBottom: '1rem'
 }
 
 export const transactionFormContainer: CSS.Properties = { 
@@ -49,4 +49,14 @@ export const amountInput: CSS.Properties = {
     marginBottom: '3rem',
     backgroundColor: 'transparent',
 
+}
+
+export const recipientInformation: CSS.Properties = { 
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    width: '32rem',
+    margin: '0 auto',
+    color: 'white',
+    paddingBottom: '1rem',
+    fontSize: '.9rem'
 }

@@ -46,3 +46,14 @@ export const signUpButton: CSS.Properties = {
     backgroundColor: '#45CB85',
     width: '9rem'
 }
+
+export const signUpHere: CSS.Properties = { 
+    color: 'white',
+    textAlign: 'center',
+}
+
+export const link: CSS.Properties = { 
+    color: '#45CB85',
+    textDecoration: 'none'
+    
+}

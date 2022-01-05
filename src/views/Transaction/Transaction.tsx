@@ -1,7 +1,6 @@
 import React,{useState} from "react";
-import { amountInput, buttonDiv, header, searchFormDiv, transactionDiv, transactionFormContainer, transferButton } from './TransactionStyles';
+import { amountInput, buttonDiv, header, recipientInformation, searchFormDiv, transactionDiv, transactionFormContainer, transferButton } from './TransactionStyles';
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-// import StatusMessages, {useMessages} from './StatusMessages';
 
 import { Box, InputAdornment, Button } from '@mui/material';
 import RecipientSearchForm from "../../components/Search/RecipientSearchForm";
@@ -9,20 +8,29 @@ import { getRecipient, newTransaction } from "../../Utils/transaction-fetch-util
 import { conversitionCentsToDollars } from "../../Utils/helpers";
 import CustomField from "../../components/CustomField/CustomField";
 
-
+interface recipientInfoProps {
+connected_acct_id: string;
+email: string;
+id: string;
+name: string;
+password_hash: string;
+}
 
 export default function Transaction(){
     const [email, setEmail ] = useState<string>('');
     const [amount, setAmount ] = useState<string>('');
     const [recipientId, setRecipientId] = useState<string>('')
+    const [recipientInfo, setRecipientInfo] = useState<recipientInfoProps | undefined>(undefined);
+    const [renderRecipientInfo, setRenderRecipientInfo] = useState(false)
 
-    // let recipientDataInfo = null;
+
 
     const handleRecipientSearch = async (event: React.FormEvent) =>{
             event.preventDefault();
 
         const recipientData = await getRecipient(email);
-        // console.log('recipientData', recipientData);
+        setRecipientInfo(recipientData);
+        setRenderRecipientInfo(true);
         
         if(recipientData.email !== email){
             setEmail('');
@@ -33,17 +41,14 @@ export default function Transaction(){
         setEmail('');
     }
 
-
     //*********------------- stripe block ---------------------- ********
     const stripe = useStripe();
     const elements = useElements();
     const convertedAmount = conversitionCentsToDollars(+amount)
     
-    //*********------------- stripe block ---------------------- ********
 
         const handleTransaction = async (event: React.FormEvent) =>{
         event.preventDefault();
-        console.log('recipientId',recipientId)
 
         if(!stripe || !elements) {
             return;
@@ -58,7 +63,6 @@ export default function Transaction(){
             type: 'card',
             card
           });
-          console.log('paymentmethod', paymentMethod)
 
           if (error) {
             console.log('[error]', error);
@@ -72,22 +76,18 @@ export default function Transaction(){
 
 
         //*********-------- confirm payment --------------- ********
-       const confirmation = await stripe.confirmCardPayment(
+        await stripe.confirmCardPayment(
             client_secret, {
                payment_method:{
                 card
                }
             }
         )
-        console.log(confirmation)
-        // if() { 
-        //     setAmount('');
-        //    return alert('Your transaction was successful!');
-        // } else { 
-        //     setAmount('');
-        //     return alert('Uh oh, transaction failed.  Please try again.')
-        // }
-
+     
+        await alert('Your Transaction was Successful')
+        setAmount('')
+        card.clear()
+       
     //*********** ------------- stripe block ---------------------- ***********
      };
     
@@ -101,9 +101,9 @@ export default function Transaction(){
                     handleRecipientSearch = {handleRecipientSearch}
                 />
             </div>
-            {/* <div>
-               hellow
-            </div> */}
+            <div style={recipientInformation}>
+               {renderRecipientInfo ? (<p>You are sending money to {recipientInfo!.name}, with the email address: {recipientInfo!.email}</p>): (<p></p>)}
+            </div>
             <Box component="form" onSubmit={handleTransaction} style={transactionFormContainer}>
                 <div style={transactionDiv}>
                     <CustomField

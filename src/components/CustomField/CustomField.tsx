@@ -10,7 +10,6 @@ interface CustomFieldProps {
     type : string, 
     variant?: any, 
     value : string, 
-    // onChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
     onChange : (event: React.ChangeEvent<HTMLInputElement>) => void,
     ariadescribedby:string,
     name: string,

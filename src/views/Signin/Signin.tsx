@@ -7,7 +7,7 @@ import { containerStyles, headerStyles } from "./SigninStyles";
 
 
 
-export default function SingIn(){
+export default function SignIn(){
 
     const [email, setEmail ] = useState<string>('');
     const [password_hash, setPassword ] = useState<string>('');
@@ -33,7 +33,6 @@ export default function SingIn(){
         }
 
     }
-
 
     return(<div style={{paddingTop: '8rem'}}>
         <div style={containerStyles}> 

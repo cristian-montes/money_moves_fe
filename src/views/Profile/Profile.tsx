@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { transactionType, transactionsDiv, transactionContainer, section, amount, header } from "./ProfileStyles";
 import { getUserTransactionHistory } from "../../Utils/transaction-fetch-utils";
 
-// interface transactionHistory 
-//     {
-//         senderid: string,
-//         name: string,
-//         email: string,
-//         amount: 50
-//         recipientid:string,
-//         paymentid: string
-//     } 
+interface transactionHistory 
+    {
+        senderid: string,
+        name: string,
+        email: string,
+        amount: 50
+        recipientid:string,
+        paymentid: string
+    } 
 
 export default function Profile(){
     const [transactions, setTransactions] = useState<any>([])
@@ -26,13 +26,13 @@ export default function Profile(){
     return(
         <div>
             <h1 style={header}>Your Transactions Activity</h1>
-            <div style={transactionContainer}>
-                {transactions.map((transaction:any)=>{
+            <div style={transactionContainer} aria-label="A list of all transactions made.">
+                {transactions.map((transaction:transactionHistory)=>{
                     return(
                         <div key={`${transaction.paymentid}-`} style={transactionsDiv} >
                             {Object.keys(transaction)[0] === 'senderid' 
                                 ? 
-                            (<div>
+                            (<div aria-labelledby="A transaction received from a friend.">
                                 <p style={transactionType}>Received From</p>
                                 <section style={section}>
                                     <p>{transaction.name}</p>
@@ -40,7 +40,7 @@ export default function Profile(){
                                 </section>
                             </div>) 
                                 : 
-                            (<div>
+                            (<div aria-labelledby="A transaction sent to a friend.">
                                 <p style={transactionType}>Payment Sent</p>
                                 <section style={section}>
                                     <p>{transaction.name}</p>
@@ -58,8 +58,3 @@ export default function Profile(){
 
     )
 }
-
-
-
-// {transaction.senderid ?(<p>Sent From:{transaction.senderid}</p> ): (<p>Received From:{transaction.recipieid} </p>) }
-// <p>${transaction.amount}</p>
