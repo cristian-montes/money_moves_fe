@@ -28,6 +28,7 @@ export const transactionFormContainer: CSS.Properties = {
     borderRadius: '.4rem',
     border: '.1rem solid #153131',
     justifyContent: 'space-between',
+    marginBottom: '5rem'
 
 }
 

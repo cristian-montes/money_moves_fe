@@ -12,8 +12,8 @@ import Transaction from './views/Transaction/Transaction';
 function App() {
   return (
     <div className="App">
-      <Header/>
           <Router>
+            <Header/>
             <Switch>
             <Route 
               path='/' exact component={Home}

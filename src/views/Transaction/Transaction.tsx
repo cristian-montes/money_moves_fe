@@ -3,14 +3,11 @@ import { amountInput, buttonDiv, header, searchFormDiv, transactionDiv, transact
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 // import StatusMessages, {useMessages} from './StatusMessages';
 
-import { useHistory } from "react-router-dom";
-import TextField from '@mui/material/TextField';
-import { InputAdornment } from "@mui/material";
-import Button from '@mui/material/Button';
+import { Box, InputAdornment, Button } from '@mui/material';
 import RecipientSearchForm from "../../components/Search/RecipientSearchForm";
 import { getRecipient, newTransaction } from "../../Utils/transaction-fetch-utils";
-import { logoutUser } from "../../Utils/auth-fetch-utils";
 import { conversitionCentsToDollars } from "../../Utils/helpers";
+import CustomField from "../../components/CustomField/CustomField";
 
 
 
@@ -18,7 +15,6 @@ export default function Transaction(){
     const [email, setEmail ] = useState<string>('');
     const [amount, setAmount ] = useState<string>('');
     const [recipientId, setRecipientId] = useState<string>('')
-    const history = useHistory();
 
     const handleRecipientSearch = async (event: React.FormEvent) =>{
             event.preventDefault();
@@ -40,11 +36,11 @@ export default function Transaction(){
         setEmail('');
     }
 
-    const handleLogout = async (event: React.FormEvent) =>{
-        event.preventDefault();
-        await logoutUser();
-        await history.push('/');
-    }
+    // const handleLogout = async (event: React.FormEvent) =>{
+    //     event.preventDefault();
+    //     await logoutUser();
+    //     await history.push('/');
+    // }
 
     //*********------------- stripe block ---------------------- ********
     const stripe = useStripe();
@@ -95,11 +91,6 @@ export default function Transaction(){
     //*********** ------------- stripe block ---------------------- ***********
      };
     
-    
-    
-    
-    
-    
     return(
         <div>
             <h1 style={header}>Send Money with MoneyMoves</h1>
@@ -110,31 +101,22 @@ export default function Transaction(){
                     handleRecipientSearch = {handleRecipientSearch}
                 />
             </div>
-            {/* <div>Sending To: me!</div> */}
-            <form onSubmit={handleTransaction} style={transactionFormContainer}>
+            <Box component="form" onSubmit={handleTransaction} style={transactionFormContainer}>
                 <div style={transactionDiv}>
-                    {/* <label htmlFor='amount'>Amount: </label>
-                    <TextField 
-                        id='amount'
-                        name='amount'
-                        type='text'
-                        value = {amount}
-                        onChange={(event) => setAmount(event.target.value)}
-                        /> */}
-                    {/* <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel> */}
-                    <TextField
-                        id="outlined-adornment-amount"
+                    <CustomField
+                        id="amount-textfield"
                         label="Enter Transfer Amount Here:"
+                        ariadescribedby={'Enter Transfer Amount Here:'}
+                        name={'amout-textfield'}
                         type={'number'}
+                        variant={'outlined'}
                         style={amountInput}
                         value={amount}
                         onChange={(event) => setAmount(event.target.value)}
-                        InputProps={{
+                        inputProps={{
                             startAdornment: <InputAdornment position="start">$</InputAdornment>,
                           }}
-                        // startAdornment={<InputAdornment position="start">$</InputAdornment>}
                     />
-                    <label htmlFor="card-element">Card</label>
                     <CardElement id="card-element"/>
                 </div>
                 <div style={buttonDiv}>
@@ -142,13 +124,7 @@ export default function Transaction(){
                         Transfer
                     </Button>
                 </div>
-            <Button onClick={() => history.push('/profile')}>
-                My Profile
-            </Button>
-            <Button onClick={handleLogout} variant="contained">
-                logout
-            </Button>
-            </form>
+            </Box>
         </div>
        
     )

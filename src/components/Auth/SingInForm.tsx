@@ -1,12 +1,10 @@
 import React from "react";
 import { inputs, formContainer, button, errorMessageStyles } from './SignInFormStyles';
-import { styled } from '@mui/material/styles';
-// import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-// import InputLabel from '@mui/material/InputLabel';
+import Box from '@mui/material/Box';
 
 
 import Button from'@mui/material/Button'
+import CustomField from "../CustomField/CustomField";
 
 
 interface SignInProps {
@@ -18,44 +16,48 @@ interface SignInProps {
     errorMessage: string;
 }
 
-const CustomTextField
- = styled(TextField)({
-  '& label.Mui-focused': {
-    color: '#45CB85', 
-  },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: 'lightgrey',
-      color: 'white'
-    },
-    '&:hover fieldset': {
-      borderColor: 'white',
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: '#45CB85',
-    },
-  },
-});
+// const CustomTextField
+//  = styled(TextField)({
+//   '& label.Mui-focused': {
+//     color: '#45CB85', 
+//   },
+//   '& .MuiOutlinedInput-root': {
+//     '& fieldset': {
+//       borderColor: 'lightgrey',
+//       color: 'white'
+//     },
+//     '&:hover fieldset': {
+//       borderColor: 'white',
+//     },
+//     '&.Mui-focused fieldset': {
+//       borderColor: '#45CB85',
+//     },
+//   },
+// });
 
 
 
 const SignInForm: React.FC<SignInProps> = ({email, setEmail, password, setPassword, handleSubmitSignIn, errorMessage })=>{
     return(
-        <form onSubmit={handleSubmitSignIn} style={formContainer}> 
-          <CustomTextField
+        <Box component="form" onSubmit={handleSubmitSignIn} style={formContainer}> 
+          <CustomField
            sx={{ input: { color: 'white' }}}         
-           id="outlined-email" 
-           label="Email"
+           id="signin-email" 
+           name = "signin-email" 
+           label="Enter email"
+           ariadescribedby={'Enter your register email'}
            style={inputs}
            type={'text'}
            variant="outlined" 
            value={email}
            onChange={(event) => setEmail(event.target.value)}
            />
-          <CustomTextField
+          <CustomField
             sx={{ input: { color: 'white' }}}         
-            id="outlined-password" 
-            label="Password" 
+            id="signin-password" 
+            name = "signin-password" 
+            label="Enter Password" 
+            ariadescribedby={'Enter your register password'}
             style={inputs}
             type={'password'}
             variant="outlined" 
@@ -65,11 +67,12 @@ const SignInForm: React.FC<SignInProps> = ({email, setEmail, password, setPasswo
 
             <p style={errorMessageStyles}>{errorMessage}</p>
           <Button
+          disabled={!email.length && !password.length}
           type="submit"
           variant="contained"
           style={button}
           >Sign In</Button>  
-      </form>
+      </Box>
     );
   }
 

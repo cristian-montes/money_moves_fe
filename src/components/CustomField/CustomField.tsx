@@ -5,16 +5,16 @@ import TextField from '@mui/material/TextField';
 interface CustomFieldProps { 
     sx?: {input: { color: string}}
     id : string, 
-    label : string, 
+    label : string,
     style? : any, 
     type : string, 
-    variant : any, 
+    variant?: any, 
     value : string, 
     // onChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
-
-
-
+    onChange : (event: React.ChangeEvent<HTMLInputElement>) => void,
+    ariadescribedby:string,
+    name: string,
+    inputProps?: {} | undefined
 }
 
 
@@ -37,7 +37,7 @@ const CustomTextField
   },
 });
 
-const CustomField: React.FC<CustomFieldProps> = ({sx, id, label, style, type, variant, value, onChange}) => { 
+const CustomField: React.FC<CustomFieldProps> = ({sx, id, label, style, type, variant, value, onChange, ariadescribedby, name, inputProps}) => { 
     return( 
         <CustomTextField
             sx={sx}
@@ -47,7 +47,12 @@ const CustomField: React.FC<CustomFieldProps> = ({sx, id, label, style, type, va
             type={type}
             variant={variant}
             value={value}
-            onChange={onChange}/>
+            onChange={onChange}
+            aria-required= {true}
+            aria-describedby={ariadescribedby}
+            name={name}
+            InputProps={inputProps}
+        />
     )
 }
 

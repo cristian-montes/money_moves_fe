@@ -1,47 +1,82 @@
 // import * as React from 'react';
-import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import HomeIcon from '@mui/icons-material/Home'
+import PaidIcon from '@mui/icons-material/Paid';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useHistory } from 'react-router-dom';
+import { MenuItem, MenuList } from '@mui/material';
+import { logoutUser } from '../../Utils/auth-fetch-utils';
+import { useLocation } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 export default function PermanentDrawerLeft() {
-  return (<>
+  const history  = useHistory();
+  const location = useLocation();
+
+  const handleLogout = async (event: React.FormEvent) =>{
+    event.preventDefault();
+    await logoutUser();
+    await history.push('/');
+}
+
+let homeTab = null;
+  if(location.pathname === '/signup' || location.pathname === '/signin') { 
+    homeTab = <>
+      <MenuItem onClick={() => history.push('/')}>
+        <HomeIcon/>
+        <ListItemText>Home</ListItemText>
+     </MenuItem>
+     <Divider/>
+    </>
+  }
+
+let activityTab = null;
+  if(location.pathname === '/profile' || location.pathname === '/transaction') { 
+    activityTab = <>
+     <MenuItem onClick={() => history.push('/transaction')}>
+    <PaidIcon/>
+    <ListItemText>Money Move</ListItemText>
+    </MenuItem>    
+     <Divider/>
+    </>
+  }
+
+  let profileTab = null;
+    if(location.pathname === '/profile' || location.pathname === '/transaction') { 
+      profileTab = <>
+         <MenuItem onClick={() => history.push('/profile')}>
+        <PersonIcon/>
+        <ListItemText>Activity</ListItemText>
+     </MenuItem>
+     <Divider/>
+      
+      </>
+    }
+
+  let logoutTab = null;
+  if(location.pathname === '/profile' || location.pathname === '/transaction') { 
+    logoutTab = <>
+     <MenuItem onClick={handleLogout}>
+        <LogoutIcon/>
+        <ListItemText>Logout</ListItemText>
+     </MenuItem>
+    </>
+  
+  }
+  
 
 
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-            backgroundColor: '#6a7fdb'
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <Toolbar />
-        <Divider />
-        <List>
-          {['Home', 'Transaction', 'Profile', 'Logout'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon style={{color: '#153131'}} /> : <MailIcon style={{color: '#153131'}} />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-      </Drawer>
+  return (
+  <>
+   <MenuList sx={{width: drawerWidth}}>
+     {homeTab}
+     {activityTab}
+     {profileTab}
+     {logoutTab}
+     </MenuList>
     </>
   );
 }
