@@ -4,12 +4,9 @@ export const header: CSS.Properties = {
     textAlign: 'center',
     color: '#6A7FDB',
    
-
-   
 }
 
 export const searchFormDiv: CSS.Properties = { 
-    // backgroundColor: 'pink',
     width: '32rem',
     height: '5rem',
     margin: '0 auto',

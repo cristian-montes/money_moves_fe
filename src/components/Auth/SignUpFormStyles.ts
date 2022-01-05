@@ -7,17 +7,21 @@ export const formContainer: CSS.Properties = {
     boxShadow: '0 8px 8px -4px #45CB',
     width: '25rem',
     margin: '0 auto',
-    marginTop: '4rem',
     borderRadius: '.4rem',
     height: '40rem',
     padding: '1rem',
     justifyContent: 'space-between'
 
-
 }
 
+export const createAccountHeader: CSS.Properties = { 
+    color: '#6A7FDB',
+    textAlign: 'center',
+    fontWeight: 'bold'
+}
+
+
 export const fieldContainer: CSS.Properties = { 
-    // backgroundColor: 'pink',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',

@@ -35,7 +35,7 @@ export default function SingIn(){
     }
 
 
-    return(
+    return(<div style={{paddingTop: '8rem'}}>
         <div style={containerStyles}> 
             <p style={headerStyles}>Sign In To Your Account:</p>
             <SignInForm
@@ -47,5 +47,6 @@ export default function SingIn(){
                 errorMessage={errorMessage}
                 />
         </div>
+    </div>
     )
 }

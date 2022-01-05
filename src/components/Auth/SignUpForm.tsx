@@ -1,7 +1,7 @@
 import React from "react";
 import Button from'@mui/material/Button'
 import Box from '@mui/material/Box';
-import { buttonContainer, fieldContainer, formContainer, signUpButton } from './SignUpFormStyles'
+import { buttonContainer, fieldContainer, formContainer, signUpButton, createAccountHeader } from './SignUpFormStyles'
 
 import CustomField from '../CustomField/CustomField';
 // import { connected } from "process";
@@ -20,10 +20,10 @@ interface SignUpProps {
 
 const SigUpForm: React.FC<SignUpProps> = ({name, setName, email, setEmail, password, setPassword,connectedAcctId, setConnectedAccId, handleSubmitSignUp}) => {
     return (
-      <div role="form" aria-label="Contact Information">
-         <p>Create Your Account</p>
+      <div role="form" aria-label="Contact Information" style={{paddingTop: '8rem'}}>
         <Box component="form" onSubmit={handleSubmitSignUp} style={formContainer}> 
           <div style={fieldContainer}>
+          <p style={createAccountHeader}>Create Your Account:</p>
             <CustomField
               id={'name'}
               sx={{input: { color: 'white'}}}

@@ -16,6 +16,8 @@ export default function Transaction(){
     const [amount, setAmount ] = useState<string>('');
     const [recipientId, setRecipientId] = useState<string>('')
 
+    let recipientDataInfo = null;
+
     const handleRecipientSearch = async (event: React.FormEvent) =>{
             event.preventDefault();
 
@@ -25,22 +27,12 @@ export default function Transaction(){
         if(recipientData.email !== email){
             setEmail('');
             return alert('No users under that email found')
-        }
-        
-        
-        //     return( <div>
-        //        { `${recipientData.name}, ${recipientData.email}`}
-        //     </div>)
+        } 
         
         setRecipientId(recipientData.id);
         setEmail('');
     }
 
-    // const handleLogout = async (event: React.FormEvent) =>{
-    //     event.preventDefault();
-    //     await logoutUser();
-    //     await history.push('/');
-    // }
 
     //*********------------- stripe block ---------------------- ********
     const stripe = useStripe();
@@ -80,13 +72,21 @@ export default function Transaction(){
 
 
         //*********-------- confirm payment --------------- ********
-        await stripe.confirmCardPayment(
+       const confirmation = await stripe.confirmCardPayment(
             client_secret, {
                payment_method:{
                 card
                }
             }
         )
+        console.log(confirmation)
+        // if() { 
+        //     setAmount('');
+        //    return alert('Your transaction was successful!');
+        // } else { 
+        //     setAmount('');
+        //     return alert('Uh oh, transaction failed.  Please try again.')
+        // }
 
     //*********** ------------- stripe block ---------------------- ***********
      };
@@ -101,6 +101,9 @@ export default function Transaction(){
                     handleRecipientSearch = {handleRecipientSearch}
                 />
             </div>
+            {/* <div>
+               hellow
+            </div> */}
             <Box component="form" onSubmit={handleTransaction} style={transactionFormContainer}>
                 <div style={transactionDiv}>
                     <CustomField

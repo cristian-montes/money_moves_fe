@@ -1,5 +1,6 @@
 // import * as React from 'react';
 import Divider from '@mui/material/Divider';
+import { menuDiv, iconStyle } from './HeaderStyles'
 import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home'
 import PaidIcon from '@mui/icons-material/Paid';
@@ -9,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { MenuItem, MenuList } from '@mui/material';
 import { logoutUser } from '../../Utils/auth-fetch-utils';
 import { useLocation } from 'react-router-dom';
+import { Fullscreen } from '@mui/icons-material';
 
 const drawerWidth = 240;
 
@@ -23,60 +25,60 @@ export default function PermanentDrawerLeft() {
 }
 
 let homeTab = null;
-  if(location.pathname === '/signup' || location.pathname === '/signin') { 
-    homeTab = <>
+  if(location.pathname === '/signup' || location.pathname === '/signin' || location.pathname === '/') { 
+    homeTab = <div>
       <MenuItem onClick={() => history.push('/')}>
-        <HomeIcon/>
+        <HomeIcon style={iconStyle}/>
         <ListItemText>Home</ListItemText>
      </MenuItem>
      <Divider/>
-    </>
+    </div>
   }
 
 let activityTab = null;
   if(location.pathname === '/profile' || location.pathname === '/transaction') { 
-    activityTab = <>
+    activityTab = <div>
      <MenuItem onClick={() => history.push('/transaction')}>
-    <PaidIcon/>
-    <ListItemText>Money Move</ListItemText>
+    <PaidIcon style={iconStyle}/>
+    <ListItemText>Money Moves</ListItemText>
     </MenuItem>    
      <Divider/>
-    </>
+    </div>
   }
 
   let profileTab = null;
     if(location.pathname === '/profile' || location.pathname === '/transaction') { 
-      profileTab = <>
+      profileTab = <div>
          <MenuItem onClick={() => history.push('/profile')}>
-        <PersonIcon/>
+        <PersonIcon style={iconStyle}/>
         <ListItemText>Activity</ListItemText>
      </MenuItem>
      <Divider/>
       
-      </>
+      </div>
     }
 
   let logoutTab = null;
   if(location.pathname === '/profile' || location.pathname === '/transaction') { 
-    logoutTab = <>
+    logoutTab = <div>
      <MenuItem onClick={handleLogout}>
-        <LogoutIcon/>
+        <LogoutIcon style={iconStyle}/>
         <ListItemText>Logout</ListItemText>
      </MenuItem>
-    </>
+    </div>
   
   }
   
 
 
   return (
-  <>
+  <div style={menuDiv}>
    <MenuList sx={{width: drawerWidth}}>
      {homeTab}
      {activityTab}
      {profileTab}
      {logoutTab}
      </MenuList>
-    </>
+    </div>
   );
 }

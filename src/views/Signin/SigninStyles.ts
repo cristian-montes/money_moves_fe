@@ -7,7 +7,6 @@ export const containerStyles: CSS.Properties = {
     boxShadow: '0 8px 8px -4px #45CB',
     width: '20rem',
     margin: '0 auto',
-    marginTop: '5rem',
     borderRadius: '.4rem',
     height: '20rem',
     padding: '2rem',
@@ -15,7 +14,6 @@ export const containerStyles: CSS.Properties = {
     alignContent: 'center',
     display: 'flex',
     flexDirection: 'column',
-    // flexWrap: 'wrap',   
 }
 
 export const headerStyles: CSS.Properties = { 
