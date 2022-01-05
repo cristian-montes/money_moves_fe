@@ -10,7 +10,6 @@ import { useHistory } from 'react-router-dom';
 import { MenuItem, MenuList } from '@mui/material';
 import { logoutUser } from '../../Utils/auth-fetch-utils';
 import { useLocation } from 'react-router-dom';
-import { Fullscreen } from '@mui/icons-material';
 
 const drawerWidth = 240;
 

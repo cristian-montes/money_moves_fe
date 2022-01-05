@@ -16,7 +16,7 @@ export default function Transaction(){
     const [amount, setAmount ] = useState<string>('');
     const [recipientId, setRecipientId] = useState<string>('')
 
-    let recipientDataInfo = null;
+    // let recipientDataInfo = null;
 
     const handleRecipientSearch = async (event: React.FormEvent) =>{
             event.preventDefault();
