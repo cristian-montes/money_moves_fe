@@ -34,7 +34,7 @@ export default function Transaction(){
             setEmail('');
             setRenderRecipientInfo(false);
             return alert('No users under that email found');
-            
+
         } else{
 
             setRecipientInfo(recipientData);
@@ -85,7 +85,7 @@ export default function Transaction(){
 
 
         //*********-------- confirm payment --------------- ********
-        await stripe.confirmCardPayment(
+       const { paymentIntent }=  await stripe.confirmCardPayment(
             // `Elements` instance that was used to create the Payment Element
             client_secret, {
                payment_method:{
@@ -93,10 +93,17 @@ export default function Transaction(){
                }
             }
         )
-     
-        await alert('Your Transaction was Successful')
+            console.log('hehehe', paymentIntent?.status)
+        if(paymentIntent?.status){
+            await alert('Your Transaction was Successful')
         setAmount('')
         card.clear()
+        } else{
+            // instead of displaying an alert, add a red text at the bottom of the information display.
+            await alert('Transaction Unsuccessful Transaction')
+            setAmount('')
+            card.clear()
+        }
        
     //*********** ------------- stripe block ---------------------- ***********
      };
