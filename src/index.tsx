@@ -21,3 +21,5 @@ render(
 
 
 reportWebVitals();
+
+// the"loadStripe" function asynchronously load the Stripe.js script and initializes a Stripe object. Pass the returned Promise to "Elements".

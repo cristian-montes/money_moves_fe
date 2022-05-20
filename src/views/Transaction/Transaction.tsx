@@ -20,7 +20,7 @@ export default function Transaction(){
     const [email, setEmail ] = useState<string>('');
     const [amount, setAmount ] = useState<string>('');
     const [recipientId, setRecipientId] = useState<string>('')
-    const [recipientInfo, setRecipientInfo] = useState<recipientInfoProps | undefined>(undefined);
+    const [recipientInfo, setRecipientInfo] = useState<recipientInfoProps | undefined >(undefined);
     const [renderRecipientInfo, setRenderRecipientInfo] = useState(false)
 
 
@@ -29,16 +29,22 @@ export default function Transaction(){
             event.preventDefault();
 
         const recipientData = await getRecipient(email);
-        setRecipientInfo(recipientData);
-        setRenderRecipientInfo(true);
         
-        if(recipientData.email !== email){
+        if( recipientData.status === 500){
             setEmail('');
-            return alert('No users under that email found')
-        } 
+            setRenderRecipientInfo(false);
+            return alert('No users under that email found');
+            
+        } else{
+
+            setRecipientInfo(recipientData);
+            console.log('data', recipientData )
+            setRenderRecipientInfo(true);
+            setRecipientId(recipientData.id);
+            setEmail('');
+        }
         
-        setRecipientId(recipientData.id);
-        setEmail('');
+
     }
 
     //*********------------- stripe block ---------------------- ********
@@ -51,6 +57,8 @@ export default function Transaction(){
         event.preventDefault();
 
         if(!stripe || !elements) {
+            //Stripe.js has not yet loading... waiting for Stripe to load.
+            //Make sure to disable from submission until Stripe.js has loaded. 
             return;
         }
         const card = elements.getElement(CardElement);
@@ -60,6 +68,7 @@ export default function Transaction(){
         }
 
         const {error, paymentMethod } = await stripe.createPaymentMethod({
+              // `Elements` instance that was used to create the Payment Element
             type: 'card',
             card
           });
@@ -77,6 +86,7 @@ export default function Transaction(){
 
         //*********-------- confirm payment --------------- ********
         await stripe.confirmCardPayment(
+            // `Elements` instance that was used to create the Payment Element
             client_secret, {
                payment_method:{
                 card
@@ -94,6 +104,7 @@ export default function Transaction(){
     return(
         <div>
             <h1 style={header}>Send Money with MoneyMoves</h1>
+
             <div style={searchFormDiv}>
                 <RecipientSearchForm
                     email={email}
@@ -101,9 +112,11 @@ export default function Transaction(){
                     handleRecipientSearch = {handleRecipientSearch}
                 />
             </div>
+
             <div style={recipientInformation}>
                {renderRecipientInfo ? (<p>You are sending money to {recipientInfo!.name}, with the email address: {recipientInfo!.email}</p>): (<p></p>)}
             </div>
+            
             <Box component="form" onSubmit={handleTransaction} style={transactionFormContainer}>
                 <div style={transactionDiv}>
                     <CustomField
@@ -132,3 +145,7 @@ export default function Transaction(){
        
     )
 }
+
+
+// STRIPE.JS is a thing wrapper around Stripe Elments that allows you to add Elements to any React App. 
+// useStripe hook returns a reference to the Stripe .js instances passed to the Elements provider. 

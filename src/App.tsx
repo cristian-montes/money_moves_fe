@@ -13,30 +13,30 @@ function App() {
           <Router>
             <Header/>
             <Switch>
-            <Route 
-              path='/' exact component={Home}
-            />
-            <Route 
-              path='/signup' 
-              exact 
-              component={SignUp}
-            />
-            <Route 
-              path='/signin' 
-              exact 
-              component={SignIn}
-            />
-             <Route 
-              path='/transaction' 
-              exact 
-              component={Transaction}
-            />
-            <Route 
-              path='/profile' 
-              exact 
-              component={Profile}
-            />
-            </Switch>
+              <Route 
+                path='/' exact component={Home}
+              />
+              <Route 
+                path='/signup' 
+                exact 
+                component={SignUp}
+              />
+              <Route 
+                path='/signin' 
+                exact 
+                component={SignIn}
+              />
+              <Route 
+                path='/transaction' 
+                exact 
+                component={Transaction}
+              />
+              <Route 
+                path='/profile' 
+                exact 
+                component={Profile}
+              />
+              </Switch>
           </Router>
     </div>
   );
