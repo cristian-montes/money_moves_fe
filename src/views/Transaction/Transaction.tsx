@@ -29,7 +29,7 @@ export default function Transaction(){
 
 
     const handleRecipientSearch = async (event: React.FormEvent) =>{
-            event.preventDefault();
+        event.preventDefault();
 
         const recipientData = await getRecipient(email);
         
@@ -54,66 +54,76 @@ export default function Transaction(){
     const elements = useElements();
     const convertedAmount = conversitionCentsToDollars(+amount)
     
+    
+    const handleTransaction = async (event: React.FormEvent) => {
+        event.preventDefault();
 
-        const handleTransaction = async (event: React.FormEvent) => {
-            event.preventDefault();
-            setTriggerLoader(true);
+        if( !amount && !email){
+            return
+        }
+        setTriggerLoader(true);
+    
 
-            if(!stripe || !elements) {
-                //Stripe.js has not yet loading... waiting for Stripe to load.
-                //Make sure to disable from submission until Stripe.js has loaded. 
-                return;
-            }
-            const card = elements.getElement(CardElement);
+        if(!stripe || !elements) {
+        //Stripe.js has not yet loading... waiting for Stripe to load.
+        //Make sure to disable from submission until Stripe.js has loaded. 
+            return;
+        }
 
-            if (card == null) {
-                return;
-            }
+        const card = elements.getElement(CardElement);
+   
+          if (card == null) {
+            return;
+        }
 
-            const {error, paymentMethod } = await stripe.createPaymentMethod({
-                // `Elements` instance that was used to create the Payment Element
-                type: 'card',
-                card
-            });
+               
 
-            if (error) {
-                console.log('[error]', error);
-            } 
-            
-            const { client_secret } = await newTransaction({
-                recipient_id:+recipientId,
-                amount:convertedAmount,
-                payment_method_id:paymentMethod!.id
-                })
-            
-                // console.log('secrete', client_secret)
-
-            //*********-------- confirm payment --------------- ********
-            const { paymentIntent }=  await stripe.confirmCardPayment(
-                    // `Elements` instance that was used to create the Payment Element
-                    client_secret, {
+        const {error, paymentMethod } = await stripe.createPaymentMethod({
+            // `Elements` instance that was used to create the Payment Element
+            type: 'card',
+            card
+        });
+   
+        if (error) {
+            console.log('[error]', error);
+        } 
+               
+               
+        const { client_secret } = await newTransaction({
+            recipient_id:+recipientId,
+            amount:convertedAmount,
+            payment_method_id:paymentMethod!.id
+        })
+                   
+        
+   
+        //*********-------- confirm payment --------------- ********
+        const { paymentIntent }=  await stripe.confirmCardPayment(
+            // `Elements` instance that was used to create the Payment Element
+                client_secret, {
                     payment_method:{
                         card
                     }
-                    }
-            );
-
-            if(paymentIntent?.status){
-                setTriggerLoader(false);
-
-                await alert('Your Transaction was Successful')
-                setAmount('')
-                card.clear()
-
-            } else{
-                // instead of displaying an alert, add a red text at the bottom of the information display.
-                await alert('Transaction Unsuccessful Transaction')
-                setAmount('')
-                card.clear()
-            }
+                }
+        );
+   
+        if(paymentIntent?.status){
+            setTriggerLoader(false);
+            setRenderRecipientInfo(false);
+            await alert('Your Transaction was Successful')
+            setAmount('')
+            card.clear()
+   
+        } else{
+            // instead of displaying an alert, add a red text at the bottom of the information display.
+            await alert('Transaction Unsuccessful Transaction')
+            setAmount('')
+            card.clear()
+        }
+            
         
          //*********** ------------- stripe block ---------------------- ***********
-        };
+    };
     
     return(
         <div>
