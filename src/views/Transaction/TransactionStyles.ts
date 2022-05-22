@@ -40,6 +40,12 @@ export const buttonDiv: CSS.Properties = {
     margin: '0 auto',
 }
 
+export const circularProgressDiv: CSS.Properties = { 
+    // paddingBottom: '2rem',
+    margin: '0 auto',
+}
+
+
 export const transactionDiv: CSS.Properties = { 
     padding: '2rem',
 }

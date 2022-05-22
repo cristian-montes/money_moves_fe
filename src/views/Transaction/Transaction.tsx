@@ -1,12 +1,14 @@
 import React,{useState} from "react";
-import { amountInput, buttonDiv, header, recipientInformation, searchFormDiv, transactionDiv, transactionFormContainer, transferButton } from './TransactionStyles';
+import { amountInput, buttonDiv, circularProgressDiv,header, recipientInformation, searchFormDiv, transactionDiv, transactionFormContainer, transferButton } from './TransactionStyles';
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 import { Box, InputAdornment, Button } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import RecipientSearchForm from "../../components/Search/RecipientSearchForm";
 import { getRecipient, newTransaction } from "../../Utils/transaction-fetch-utils";
 import { conversitionCentsToDollars } from "../../Utils/helpers";
 import CustomField from "../../components/CustomField/CustomField";
+// import { convertColorToString } from "material-ui/utils/colorManipulator";
 
 interface recipientInfoProps {
 connected_acct_id: string;
@@ -21,7 +23,8 @@ export default function Transaction(){
     const [amount, setAmount ] = useState<string>('');
     const [recipientId, setRecipientId] = useState<string>('')
     const [recipientInfo, setRecipientInfo] = useState<recipientInfoProps | undefined >(undefined);
-    const [renderRecipientInfo, setRenderRecipientInfo] = useState(false)
+    const [renderRecipientInfo, setRenderRecipientInfo] = useState(false);
+    const [trigerLoader, setTriggerLoader] = useState(false);
 
 
 
@@ -44,7 +47,6 @@ export default function Transaction(){
             setEmail('');
         }
         
-
     }
 
     //*********------------- stripe block ---------------------- ********
@@ -53,65 +55,71 @@ export default function Transaction(){
     const convertedAmount = conversitionCentsToDollars(+amount)
     
 
-        const handleTransaction = async (event: React.FormEvent) =>{
-        event.preventDefault();
+        const handleTransaction = async (event: React.FormEvent) => {
+            event.preventDefault();
+            setTriggerLoader(true);
 
-        if(!stripe || !elements) {
-            //Stripe.js has not yet loading... waiting for Stripe to load.
-            //Make sure to disable from submission until Stripe.js has loaded. 
-            return;
-        }
-        const card = elements.getElement(CardElement);
-
-        if (card == null) {
-            return;
-        }
-
-        const {error, paymentMethod } = await stripe.createPaymentMethod({
-              // `Elements` instance that was used to create the Payment Element
-            type: 'card',
-            card
-          });
-
-          if (error) {
-            console.log('[error]', error);
-          } 
-        
-          const { client_secret } = await newTransaction({
-              recipient_id:+recipientId,
-              amount:convertedAmount,
-              payment_method_id:paymentMethod!.id
-            })
-
-
-        //*********-------- confirm payment --------------- ********
-       const { paymentIntent }=  await stripe.confirmCardPayment(
-            // `Elements` instance that was used to create the Payment Element
-            client_secret, {
-               payment_method:{
-                card
-               }
+            if(!stripe || !elements) {
+                //Stripe.js has not yet loading... waiting for Stripe to load.
+                //Make sure to disable from submission until Stripe.js has loaded. 
+                return;
             }
-        )
-            console.log('hehehe', paymentIntent?.status)
-        if(paymentIntent?.status){
-            await alert('Your Transaction was Successful')
-        setAmount('')
-        card.clear()
-        } else{
-            // instead of displaying an alert, add a red text at the bottom of the information display.
-            await alert('Transaction Unsuccessful Transaction')
-            setAmount('')
-            card.clear()
-        }
-       
-    //*********** ------------- stripe block ---------------------- ***********
-     };
+            const card = elements.getElement(CardElement);
+
+            if (card == null) {
+                return;
+            }
+
+            const {error, paymentMethod } = await stripe.createPaymentMethod({
+                // `Elements` instance that was used to create the Payment Element
+                type: 'card',
+                card
+            });
+
+            if (error) {
+                console.log('[error]', error);
+            } 
+            
+            const { client_secret } = await newTransaction({
+                recipient_id:+recipientId,
+                amount:convertedAmount,
+                payment_method_id:paymentMethod!.id
+                })
+            
+                // console.log('secrete', client_secret)
+
+            //*********-------- confirm payment --------------- ********
+            const { paymentIntent }=  await stripe.confirmCardPayment(
+                    // `Elements` instance that was used to create the Payment Element
+                    client_secret, {
+                    payment_method:{
+                        card
+                    }
+                    }
+            );
+
+            if(paymentIntent?.status){
+                setTriggerLoader(false);
+
+                await alert('Your Transaction was Successful')
+                setAmount('')
+                card.clear()
+
+            } else{
+                // instead of displaying an alert, add a red text at the bottom of the information display.
+                await alert('Transaction Unsuccessful Transaction')
+                setAmount('')
+                card.clear()
+            }
+        
+         //*********** ------------- stripe block ---------------------- ***********
+        };
     
     return(
         <div>
             <h1 style={header}>Send Money with MoneyMoves</h1>
 
+            {/* Input Field to find Recipient's Email */}
             <div style={searchFormDiv}>
                 <RecipientSearchForm
                     email={email}
@@ -124,6 +132,7 @@ export default function Transaction(){
                {renderRecipientInfo ? (<p>You are sending money to {recipientInfo!.name}, with the email address: {recipientInfo!.email}</p>): (<p></p>)}
             </div>
             
+           {/* Box containing Amoung Field and Card component */}
             <Box component="form" onSubmit={handleTransaction} style={transactionFormContainer}>
                 <div style={transactionDiv}>
                     <CustomField
@@ -142,6 +151,15 @@ export default function Transaction(){
                     />
                     <CardElement id="card-element"/>
                 </div>
+                
+                {/* LOADER/ SPEANER */}
+                { trigerLoader ?
+                    <div style={circularProgressDiv}>
+                        <CircularProgress /> 
+                    </div>
+                    : ''
+                }
+
                 <div style={buttonDiv}>
                     <Button type="submit" variant="contained" style={transferButton}>
                         Transfer
